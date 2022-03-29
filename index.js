@@ -14,7 +14,7 @@ const router = express.Router();
 
 //Loading Routes
 const webRoutes = require("./routes/web");
-const sequelize = require("./config/database");
+const { sequelize } = require("./config/database");
 
 env.config();
 app.use(bodyParser.urlencoded({ extended: true }));

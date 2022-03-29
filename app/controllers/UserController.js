@@ -109,7 +109,9 @@ exports.deleteUser = (req, res, next) => {
           },
         });
         const result_1 = user;
-        return res.status(err.sucess).send({ data: result_1 });
+        return res
+          .status(err.sucess)
+          .send({ data: "User Successfully deleted" });
       } else {
         return res.status(err.not_found).json({
           Error: {

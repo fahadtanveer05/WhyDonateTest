@@ -1,4 +1,5 @@
 const Sequelize = require("sequelize");
+const err = require("../Misc/constants");
 const env = require("dotenv");
 env.config();
 
@@ -13,4 +14,22 @@ const sequelize = new Sequelize(DB_DATABASE, DB_USERNAME, DB_PASSWORD, {
   host: DB_HOST,
 });
 
-module.exports = sequelize;
+connect = (req, res, next) => {
+  sequelize
+    .authenticate()
+    .then(() => {
+      return res.status(err.sucess).send({
+        data: "Connection has been established successfully",
+      });
+    })
+    .catch((err) => {
+      return res.status(err.not_found).json({
+        Error: {
+          code: err.not_found,
+          Message: "Unable to connect to the database",
+        },
+      });
+    });
+};
+
+module.exports = { sequelize, connect };
