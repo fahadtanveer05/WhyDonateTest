@@ -1,13 +1,13 @@
 {
-  "name": "node-express-mysql-boilerplate",
+  "name": "whydonate",
   "version": "1.0.0",
-  "description": "A boilerplate for Node.js web applications with express and MySQL",
+  "description": "test",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon index.js"
+    "start": "node index.js"
   },
-  "author": "Mangesh Ghadigaonkar",
+  "author": "Fahad Tanveer",
   "license": "ISC",
   "devDependencies": {
     "nodemon": "^2.0.4"
