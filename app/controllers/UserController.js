@@ -3,6 +3,7 @@ const validator = require("validator");
 const Session = require("../models/Session");
 const User = require("../models/User");
 const multer = require("multer");
+const err = require("../../Misc/constants");
 
 exports.getUser = (req, res, next) => {
   User.findOne({
@@ -12,13 +13,13 @@ exports.getUser = (req, res, next) => {
   })
     .then((user) => {
       if (user) {
-        res.status(200).send({
+        return res.status(err.sucess).send({
           data: user,
         });
       } else {
-        res.status(404).json({
+        return res.status(err.not_found).json({
           Error: {
-            code: 404,
+            code: err.not_found,
             Message: "No user found with this id",
           },
         });
@@ -48,17 +49,14 @@ exports.createUser = (req, res, next) => {
             return user.save();
           })
           .then((result) => {
-            res.status(200).send({ data: result });
+            return res.status(err.sucess).send({ data: result });
           });
       } else {
-        res.status(404).json({
+        return res.status(err.not_found).json({
           Error: {
-            code: 404,
+            code: err.not_found,
             Message: "E-Mail exists already, please pick a different one.",
           },
-        });
-        res.status(400).send({
-          error: "E-Mail exists already, please pick a different one.",
         });
       }
     })
@@ -84,11 +82,11 @@ exports.updateUser = (req, res, next) => {
           },
           { where: { id: user.id } }
         );
-        res.status(200).send({ data: user });
+        return res.status(err.sucess).send({ data: user });
       } else {
-        res.status(404).json({
+        return res.status(err.not_found).json({
           Error: {
-            code: 404,
+            code: err.not_found,
             Message: "User Does Not Exists",
           },
         });
@@ -111,11 +109,11 @@ exports.deleteUser = (req, res, next) => {
           },
         });
         const result_1 = user;
-        res.status(200).send({ data: result_1 });
+        return res.status(err.sucess).send({ data: result_1 });
       } else {
-        res.status(404).json({
+        return res.status(err.not_found).json({
           Error: {
-            code: 404,
+            code: err.not_found,
             Message: "User Does Not Exists",
           },
         });
