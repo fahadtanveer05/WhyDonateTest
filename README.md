@@ -1,4 +1,4 @@
-Clone the project from github 
+Clone the project
 
 Open project directory and run "npm i" to install packages
 
