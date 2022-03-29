@@ -1,4 +1,3 @@
-const crypto = require("crypto");
 const bcrypt = require("bcryptjs");
 const validator = require("validator");
 const Session = require("../models/Session");
@@ -14,10 +13,15 @@ exports.getUser = (req, res, next) => {
     .then((user) => {
       if (user) {
         res.status(200).send({
-          user: user,
+          data: user,
         });
       } else {
-        res.status(400).json({ error: "No user found with this id" });
+        res.status(404).json({
+          Error: {
+            code: 404,
+            Message: "No user found with this id",
+          },
+        });
       }
     })
     .catch((err) => console.log(err));
@@ -44,9 +48,15 @@ exports.createUser = (req, res, next) => {
             return user.save();
           })
           .then((result) => {
-            res.status(200).send({ result: result });
+            res.status(200).send({ data: result });
           });
       } else {
+        res.status(404).json({
+          Error: {
+            code: 404,
+            Message: "E-Mail exists already, please pick a different one.",
+          },
+        });
         res.status(400).send({
           error: "E-Mail exists already, please pick a different one.",
         });
@@ -74,10 +84,13 @@ exports.updateUser = (req, res, next) => {
           },
           { where: { id: user.id } }
         );
-        res.status(200).send({ result: user });
+        res.status(200).send({ data: user });
       } else {
-        res.status(400).send({
-          error: "E-Mail exists already, please pick a different one.",
+        res.status(404).json({
+          Error: {
+            code: 404,
+            Message: "User Does Not Exists",
+          },
         });
       }
     })
@@ -98,10 +111,13 @@ exports.deleteUser = (req, res, next) => {
           },
         });
         const result_1 = user;
-        res.status(200).send({ result: result_1 });
+        res.status(200).send({ data: result_1 });
       } else {
-        res.status(400).send({
-          error: "E-Mail exists already, please pick a different one.",
+        res.status(404).json({
+          Error: {
+            code: 404,
+            Message: "User Does Not Exists",
+          },
         });
       }
     })
